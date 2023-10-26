@@ -12,7 +12,15 @@ function App() {
 		})
 	}
 
-	console.log(state)
+	const handleImageChange = (e) => {
+		dispatch({
+			type: 'CHANGE_INPUT_IMAGE',
+			payload: {
+				name: e.target.name,
+				value: URL.createObjectURL(e.target.files[0]),
+			},
+		})
+	}
 
 	return (
 		<main className=''>
@@ -44,11 +52,36 @@ function App() {
 					<div className='form-input'>
 						<label htmlFor='image'>Choose image</label>
 						<br />
-						<input type='file' id='image' name='image' />
+						<input
+							type='file'
+							id='image'
+							name='image'
+							onChange={handleImageChange}
+						/>
 					</div>
 
 					<button type='submit'>Create product</button>
 				</form>
+				<div className='product_form-preview'>
+					<span className='image-preview'>
+						{state.image && (
+							<img
+								src={state.image}
+								alt='preview'
+								style={{
+									objectFit: 'cover',
+									display: 'block',
+									width: '150px',
+									height: '150px',
+								}}
+							/>
+						)}
+					</span>
+					<div className='details-preview'>
+						{state.name && <span>Product Name: {state.name}</span>}
+						{state.price && <span>Product Price: {state.price}</span>}
+					</div>
+				</div>
 			</section>
 
 			<ProductList />

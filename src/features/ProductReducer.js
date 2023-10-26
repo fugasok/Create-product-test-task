@@ -9,7 +9,7 @@ export const ProductFormReducer = (state, action) => {
 		case 'CHANGE_INPUT':
 			return { ...state, [action.payload.name]: action.payload.value }
 		case 'CHANGE_INPUT_IMAGE':
-			return {}
+			return { ...state, [action.payload.name]: action.payload.value }
 		case 'SUBMIT_PRODUCT':
 			return {}
 		default:

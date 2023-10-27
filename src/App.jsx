@@ -26,8 +26,6 @@ function App() {
 		})
 	}
 
-	const removeProduct = (e) => {}
-
 	const submitProduct = (e) => {
 		e.preventDefault()
 		if (!product.name || !product.price || !product.image) {
@@ -46,6 +44,11 @@ function App() {
 		dispatch({
 			type: 'CLEAR_VALUES',
 		})
+	}
+
+	const removeProduct = (productId) => {
+		const newProducts = products.filter((product) => product.id !== productId)
+		setProducts(newProducts)
 	}
 
 	return (
@@ -83,8 +86,8 @@ function App() {
 				<ul>
 					{products.map((product) => {
 						return (
-							<>
-								<li key={product.id}>
+							<li key={product.id}>
+								<article>
 									<picture>
 										<img src={product.image} alt='product image' />
 									</picture>
@@ -92,15 +95,18 @@ function App() {
 										<span>{product.name}</span>
 										<span>{product.price}</span>
 									</div>
-									<button type='button' onClick={removeProduct}>
+									<button
+										type='button'
+										onClick={(e) => removeProduct(product.id)}
+									>
 										X
 									</button>
-								</li>
-							</>
+								</article>
+							</li>
 						)
 					})}
 				</ul>
-				<ProductList />
+				{/* <ProductList /> */}
 			</section>
 			<ToastContainer position='top-center' autoClose='2000' />
 		</main>

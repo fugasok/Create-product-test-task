@@ -2,6 +2,8 @@ import { useReducer, useState } from 'react'
 import { ProductList, FormInput } from './components/'
 import { productReducer, initialState } from './features/ProductReducer'
 import { nanoid } from 'nanoid'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
 	const [product, dispatch] = useReducer(productReducer, initialState)
@@ -24,8 +26,14 @@ function App() {
 		})
 	}
 
+	const removeProduct = (e) => {}
+
 	const submitProduct = (e) => {
 		e.preventDefault()
+		if (!product.name || !product.price || !product.image) {
+			toast.error('Please fill out all fields')
+			return
+		}
 		setProducts([
 			...products,
 			{
@@ -64,7 +72,6 @@ function App() {
 						name='image'
 						handleChange={handleImageChange}
 						labelText='Choose file'
-						value={product.image}
 					/>
 
 					<button type='submit'>Create product</button>
@@ -85,6 +92,9 @@ function App() {
 										<span>{product.name}</span>
 										<span>{product.price}</span>
 									</div>
+									<button type='button' onClick={removeProduct}>
+										X
+									</button>
 								</li>
 							</>
 						)
@@ -92,6 +102,7 @@ function App() {
 				</ul>
 				<ProductList />
 			</section>
+			<ToastContainer position='top-center' autoClose='2000' />
 		</main>
 	)
 }
